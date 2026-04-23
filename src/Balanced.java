@@ -1,20 +1,26 @@
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class Balanced {
   public static boolean isBalanced(String s) {
-    Stack<Character> stack = new Stack<>();
+    Deque<Character> stack = new ArrayDeque<>();
     for (int i = 0; i < s.length(); i++) {
-      char current = s.charAt(i);
-      if (current == '(' || current == '[' || current == '{') {
-        stack.push(current);
-      } else if (current == ')' || current == ']' || current == '}') {
-        if (stack.isEmpty()) {
-          return false;
-        }
-        stack.pop();
+      char c = s.charAt(i);
+      if (c == '(' || c == '[' || c == '{') {
+        stack.push(c);
+      } else if (c == ')' || c == ']' || c == '}') {
+        if (stack.isEmpty()) return false;
+        char opener = stack.pop();
+        if (!matches(opener, c)) return false;
       }
     }
     return stack.isEmpty();
+  }
+
+  private static boolean matches(char opener, char closer){
+    return (opener == '(' && closer == ')')
+        || (opener == '[' && closer == ']')
+        || (opener == '{' && closer == '}');
   }
 
   public static void main(String[] args) {
