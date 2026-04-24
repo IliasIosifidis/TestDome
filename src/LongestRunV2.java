@@ -15,7 +15,27 @@ public class LongestRunV2 {
   }
 
   public static Run longestRun(String s) {
-    return new Run('c',12);
+    if (s.isEmpty()) return new Run(' ',0);
+
+    char currentChar = s.charAt(0);
+    int currentRun = 1;
+    char bestChar = currentChar;
+    int bestRun = 1;
+
+    for (int i = 1; i < s.length(); i++) {
+      char c = s.charAt(i);
+      if (c == currentChar){
+        currentRun++;
+      } else {
+        currentChar = c;
+        currentRun = 1;
+      }
+      if (currentRun > bestRun){
+        bestRun = currentRun;
+        bestChar = currentChar;
+      }
+    }
+    return new Run(bestChar, bestRun);
   }
 
   public static void main(String[] args) {
