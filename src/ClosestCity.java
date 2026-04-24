@@ -5,6 +5,18 @@ public class ClosestCity {
     public final double x;
     public final double y;
 
+    public String getName() {
+      return name;
+    }
+
+    public double getX() {
+      return x;
+    }
+
+    public double getY() {
+      return y;
+    }
+
     public City(String name, double x, double y) {
       this.name = name;
       this.x = x;
@@ -13,7 +25,21 @@ public class ClosestCity {
   }
 
   public static String findClosest(City[] cities, double x, double y) {
-    return " ";
+    if (cities.length == 0) return null;
+
+    String closestCity = null;
+    double closestRun = Double.MAX_VALUE;
+
+    for (City c : cities){
+      double dx = x - c.x;
+      double dy = y - c.y;
+      double distSquare = dx * dx + dy * dy;
+      if (distSquare < closestRun){
+        closestRun = distSquare;
+        closestCity = c.name;
+      }
+    }
+    return closestCity;
   }
 
   public static void main(String[] args) {
@@ -30,5 +56,4 @@ public class ClosestCity {
     System.out.println(findClosest(cities, 2.0, -3.0));   // Heraklion
     System.out.println(findClosest(cities, 100.0, 100.0)); // Thessaloniki (closest of the four to far away)
     System.out.println(findClosest(new City[0], 0, 0));   // null (empty input)
-  }
-}
+  }}
